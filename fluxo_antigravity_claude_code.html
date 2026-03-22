@@ -1,0 +1,563 @@
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+
+<style>
+  :root {
+    --purple: #375a7f;
+    --purple-l: #e7f0fb;
+    --purple-m: #8aa8c8;
+    --teal: #0d6e6e;
+    --teal-l: #ddf6f6;
+    --amber: #8a5a1d;
+    --amber-l: #fff1dd;
+    --gray-l: #f2f4f7;
+    --gray-m: #d2d8df;
+    --gray: #4f5965;
+  }
+
+  * {
+    box-sizing: border-box;
+  }
+
+  body {
+    background: radial-gradient(circle at 0% 0%, #eff8ff 0%, #f8fbff 40%, #ffffff 100%);
+  }
+
+  .wrap {
+    padding: 1.75rem 0 2rem;
+    font-family: "Segoe UI", "Trebuchet MS", sans-serif;
+  }
+
+  .phase-nav {
+    display: grid;
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+    gap: 0.4rem;
+    margin-bottom: 1.5rem;
+    padding: 0.4rem;
+    border: 1px solid #dce6f3;
+    border-radius: 1rem;
+    background: #fff;
+    box-shadow: 0 12px 24px -20px rgba(31, 53, 77, 0.45);
+  }
+
+  .phase-btn {
+    padding: 0.6rem 0.45rem;
+    font-size: 0.8rem;
+    font-weight: 500;
+    color: #40536b;
+    background: #f3f7fc;
+    border: 1px solid #e0e9f4;
+    border-radius: 0.7rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    line-height: 1.2;
+    min-height: 62px;
+  }
+
+  .phase-btn:hover {
+    background: #e9f2fc;
+    transform: translateY(-1px);
+  }
+
+  .phase-btn.active {
+    background: linear-gradient(135deg, var(--purple), #4b88c7);
+    color: #fff;
+    border-color: transparent;
+    box-shadow: 0 8px 18px -12px rgba(26, 82, 140, 0.9);
+  }
+
+  .phase-btn .phase-num {
+    display: block;
+    font-size: 0.68rem;
+    opacity: 0.78;
+    margin-bottom: 0.2rem;
+    font-weight: 400;
+  }
+
+  .phase-btn .phase-icon {
+    display: block;
+    font-size: 1rem;
+    margin-bottom: 0.15rem;
+  }
+
+  .card {
+    border: 1px solid #dce6f3;
+    border-radius: 1rem;
+    padding: 1.3rem 1.4rem;
+    background: #fff;
+    box-shadow: 0 22px 35px -30px rgba(31, 53, 77, 0.55);
+  }
+
+  .card-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 1rem;
+  }
+
+  .tool-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 11px;
+    font-weight: 600;
+    padding: 4px 11px;
+    border-radius: 99px;
+  }
+
+  .badge-ag {
+    background: var(--amber-l);
+    color: var(--amber);
+  }
+
+  .badge-cc {
+    background: var(--purple-l);
+    color: var(--purple);
+  }
+
+  .badge-both {
+    background: var(--teal-l);
+    color: var(--teal);
+  }
+
+  .phase-title {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #1f3148;
+    margin: 0;
+  }
+
+  .phase-desc {
+    font-size: 0.92rem;
+    color: #4e627a;
+    line-height: 1.62;
+    margin-bottom: 1rem;
+  }
+
+  .steps {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 1rem;
+  }
+
+  .step {
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+    background: #f9fbff;
+    border: 1px solid #e4ecf7;
+    border-radius: 0.75rem;
+    padding: 0.7rem;
+  }
+
+  .step-dot {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+    font-weight: 500;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+
+  .dot-ag {
+    background: var(--amber-l);
+    color: var(--amber);
+  }
+
+  .dot-cc {
+    background: var(--purple-l);
+    color: var(--purple);
+  }
+
+  .dot-dev {
+    background: var(--gray-l);
+    color: var(--gray);
+  }
+
+  .dot-ok {
+    background: var(--teal-l);
+    color: var(--teal);
+  }
+
+  .step-content {
+    flex: 1;
+  }
+
+  .step-title {
+    font-size: 0.84rem;
+    font-weight: 700;
+    color: #1e3147;
+    margin-bottom: 0.18rem;
+  }
+
+  .step-detail {
+    font-size: 0.79rem;
+    color: #566a82;
+    line-height: 1.5;
+  }
+
+  .code-block {
+    background: #edf4fb;
+    border: 1px solid #d9e7f7;
+    border-radius: 0.6rem;
+    padding: 10px 12px;
+    font-family: "Consolas", "Courier New", monospace;
+    font-size: 11px;
+    color: #31506f;
+    line-height: 1.6;
+    margin-top: 6px;
+    white-space: pre-wrap;
+  }
+
+  .highlight {
+    background: var(--purple-l);
+    border-left: 2px solid var(--purple);
+    border-radius: 0;
+    padding: 10px 14px;
+    font-size: 13px;
+    color: #3C3489;
+    line-height: 1.6;
+    margin-top: 1rem;
+  }
+
+  .highlight.teal {
+    background: var(--teal-l);
+    border-color: var(--teal);
+    color: #085041;
+  }
+
+  .highlight.amber {
+    background: var(--amber-l);
+    border-color: var(--amber);
+    color: var(--amber);
+  }
+
+  .divider-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin: 1rem 0 0.75rem;
+  }
+
+  .divider-line {
+    flex: 1;
+    height: 0.5px;
+    background: var(--color-border-tertiary);
+  }
+
+  .divider-label {
+    font-size: 11px;
+    color: var(--color-text-tertiary);
+    white-space: nowrap;
+  }
+
+  .nav-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 1.25rem;
+  }
+
+  .nav-btn {
+    padding: 8px 16px;
+    font-size: 12px;
+    border: 1px solid #d6e1ee;
+    border-radius: 0.65rem;
+    background: #f4f8fd;
+    color: #425873;
+    cursor: pointer;
+    transition: background 0.15s;
+  }
+
+  .nav-btn:hover {
+    background: #e9f2fc;
+  }
+
+  .nav-btn.primary {
+    background: linear-gradient(135deg, var(--purple), #4b88c7);
+    color: #fff;
+    border-color: transparent;
+  }
+
+  .nav-btn.primary:hover {
+    opacity: 0.9;
+  }
+
+  .nav-btn:disabled {
+    opacity: 0.3;
+    cursor: default;
+  }
+
+  .progress {
+    font-size: 11px;
+    color: #73869f;
+  }
+
+  .overview-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-bottom: 1rem;
+  }
+
+  .overview-card {
+    border: 1px solid #dce6f3;
+    border-radius: 0.75rem;
+    padding: 0.75rem 1rem;
+    background: #fbfdff;
+  }
+
+  .ov-tool {
+    font-size: 11px;
+    font-weight: 500;
+    margin-bottom: 4px;
+  }
+
+  .ov-desc {
+    font-size: 12px;
+    color: #4f627a;
+    line-height: 1.5;
+  }
+
+  .tag-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-top: 8px;
+  }
+
+  .tag {
+    font-size: 10px;
+    padding: 2px 8px;
+    border-radius: 99px;
+    background: #eff4fa;
+    color: #4d627d;
+    border: 1px solid #dde8f6;
+  }
+
+  @media (max-width: 900px) {
+    .phase-nav {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .overview-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  @media (max-width: 560px) {
+    .phase-nav {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .nav-row {
+      gap: 8px;
+    }
+
+    .nav-btn {
+      padding: 8px 12px;
+    }
+
+    .card {
+      padding: 1.05rem;
+    }
+  }
+</style>
+
+<div class="wrap container-lg">
+
+  <div class="d-flex align-items-center justify-content-between mb-3">
+    <div>
+      <h1 class="h4 mb-1 text-primary-emphasis"><i class="bi bi-stars me-2"></i>Fluxo Antigravity + Claude Code</h1>
+      <p class="text-secondary small mb-0">Do planejamento ao PR com etapas guiadas e revisão cruzada.</p>
+    </div>
+    <span class="badge text-bg-light border"><i class="bi bi-rocket-takeoff me-1"></i>5 fases</span>
+  </div>
+
+  <div class="phase-nav" id="phaseNav">
+    <button class="phase-btn active" onclick="goTo(0)"><span class="phase-icon"><i
+          class="bi bi-grid-3x3-gap-fill"></i></span><span class="phase-num">Visão geral</span>Combo</button>
+    <button class="phase-btn" onclick="goTo(1)"><span class="phase-icon"><i class="bi bi-list-check"></i></span><span
+        class="phase-num">Fase 1</span>Tarefa</button>
+    <button class="phase-btn" onclick="goTo(2)"><span class="phase-icon"><i
+          class="bi bi-file-earmark-text"></i></span><span class="phase-num">Fase 2</span>Spec</button>
+    <button class="phase-btn" onclick="goTo(3)"><span class="phase-icon"><i class="bi bi-code-slash"></i></span><span
+        class="phase-num">Fase 3</span>Impl.</button>
+    <button class="phase-btn" onclick="goTo(4)"><span class="phase-icon"><i class="bi bi-search"></i></span><span
+        class="phase-num">Fase 4</span>Revisão</button>
+    <button class="phase-btn" onclick="goTo(5)"><span class="phase-icon"><i class="bi bi-send-check"></i></span><span
+        class="phase-num">Fase 5</span>Entrega</button>
+  </div>
+
+  <div id="content"></div>
+
+</div>
+
+<script>
+  const phases = [
+    {
+      title: 'Como o combo funciona',
+      badge: 'both',
+      badgeLabel: 'Antigravity + Claude Code',
+      desc: 'Cada ferramenta tem um papel claro. O Antigravity gera especificações e faz o trabalho de IDE (autocomplete, multi-agent, browser). O Claude Code executa as implementações complexas no terminal com raciocínio mais profundo.',
+      content: () => `
+      <div class="overview-grid">
+        <div class="overview-card">
+          <div class="ov-tool" style="color:var(--amber)">Google Antigravity</div>
+          <div class="ov-desc">IDE principal do dia a dia. Gera especificações via Gemini 3 Pro, faz autocomplete, roda multi-agents paralelos e testa UI via browser agent.</div>
+          <div class="tag-row">
+            <span class="tag">Especificações</span>
+            <span class="tag">Autocomplete</span>
+            <span class="tag">Multi-agent</span>
+            <span class="tag">Browser E2E</span>
+          </div>
+        </div>
+        <div class="overview-card">
+          <div class="ov-tool" style="color:var(--purple)">Claude Code CLI</div>
+          <div class="ov-desc">Motor de raciocínio no terminal. Implementa a partir das specs geradas, refatora monorepos, gera testes e resolve arquitetura MCP.</div>
+          <div class="tag-row">
+            <span class="tag">Implementação</span>
+            <span class="tag">Testes Jest</span>
+            <span class="tag">MCP nativo</span>
+            <span class="tag">Swagger</span>
+          </div>
+        </div>
+      </div>
+      <div class="highlight teal"><strong>Regra de ouro:</strong> Antigravity pensa "o quê" (spec, estrutura, interface). Claude Code pensa "como" (implementação, lógica, edge cases). Quando travar em um, troque para o outro.</div>
+    `
+    },
+    {
+      title: 'Fase 1 — receber a tarefa',
+      badge: 'dev',
+      badgeLabel: 'Dev',
+      desc: 'Antes de abrir qualquer ferramenta, o dev define a tarefa com clareza suficiente para que a IA entenda o contexto e as restrições.',
+      steps: [
+        { dot: 'dot-dev', num: '1', title: 'Definir o escopo', detail: 'O que precisa ser feito? Qual endpoint, componente ou feature? Qual o critério de aceite?' },
+        { dot: 'dot-dev', num: '2', title: 'Identificar dependências', detail: 'Quais arquivos, rotas ou serviços existentes serão afetados? Há libs com versão específica?', code: 'Exemplo: "Criar endpoint POST /agendamentos no Express,\nauthenticado via JWT, salvar no Postgres via Prisma.\nVersão: Node 20, Express 4.x, Prisma 5.x"' },
+        { dot: 'dot-dev', num: '3', title: 'Abrir o Antigravity', detail: 'Abre o projeto no Antigravity. O multi-agent vai indexar o workspace automaticamente.' },
+      ],
+      highlight: { type: 'amber', text: 'Quanto melhor a descrição da tarefa nessa fase, menor o número de iterações nas fases seguintes. 2 minutos aqui economizam 20 minutos de ajuste depois.' }
+    },
+    {
+      title: 'Fase 2 — gerar spec no Antigravity',
+      badge: 'ag',
+      badgeLabel: 'Antigravity (Gemini)',
+      desc: 'O Antigravity usa o Gemini 3 Pro para analisar o codebase e gerar uma especificação estruturada — contratos de API, estrutura de arquivos e comportamentos esperados.',
+      steps: [
+        { dot: 'dot-ag', num: 'A', title: 'Prompt de especificação', detail: 'No chat do Antigravity, descreva a tarefa e peça uma spec antes da implementação.', code: '"Analise o projeto e gere uma especificação técnica para: [tarefa].\nInclua: estrutura de arquivos, contratos de API, tipos TypeScript,\ncomportamentos esperados e edge cases. Não implemente ainda."' },
+        { dot: 'dot-ag', num: 'B', title: 'Antigravity indexa o projeto', detail: 'O Gemini 3 Pro lê o codebase via multi-agent e gera a spec como um Artifact auditável no Manager View.' },
+        { dot: 'dot-ag', num: 'C', title: 'Dev revisa a spec', detail: 'Ler o Artifact gerado. Corrigir nomes, ajustar contratos, remover o que não faz sentido. Essa é a fase de decisão — não de codificação.' },
+        { dot: 'dot-ag', num: 'D', title: 'Exportar a spec', detail: 'Copiar o conteúdo final da spec. Será o input para o Claude Code na próxima fase.', code: 'Dica: peça ao Antigravity para salvar a spec em\n/docs/specs/[nome-da-feature].md no próprio repo.' },
+      ],
+      highlight: { type: '', text: 'O Gemini 3 Pro do Antigravity tem janela de 1M tokens — ele consegue ler o monorepo inteiro numa única passagem para contextualizar a spec.' }
+    },
+    {
+      title: 'Fase 3 — implementar com Claude Code',
+      badge: 'cc',
+      badgeLabel: 'Claude Code CLI',
+      desc: 'Com a spec validada em mãos, o Claude Code recebe o documento e executa a implementação no terminal com Opus 4.6 — raciocínio mais profundo, melhor em edge cases e lógica complexa.',
+      steps: [
+        { dot: 'dot-cc', num: '1', title: 'Abrir o terminal e iniciar Claude Code', detail: 'No diretório do projeto, iniciar o Claude Code com a spec como contexto.', code: 'claude\n\n# Dentro do Claude Code:\n"Leia /docs/specs/[feature].md e implemente\nconforme a especificação. Comece pelos tipos e\ncontratos, depois a lógica de negócio."' },
+        { dot: 'dot-cc', num: '2', title: 'Claude Code implementa em camadas', detail: 'O Opus 4.6 implementa seguindo a spec: tipos → validação → lógica → testes → documentação. Cada camada é revisada antes da próxima.' },
+        { dot: 'dot-cc', num: '3', title: 'Gerar testes Jest automaticamente', detail: 'Após a implementação, pedir os testes unitários dentro da mesma sessão.', code: '"Agora gere os testes Jest para o que foi implementado.\nCubra os happy paths e os edge cases da spec."' },
+        { dot: 'dot-cc', num: '4', title: 'Gerar Swagger/JSDoc', detail: 'Com o código pronto, Claude Code documenta em sequência.', code: '"Gere a documentação Swagger OpenAPI 3.x\npara os endpoints criados e adicione JSDoc\nnos métodos principais."' },
+      ],
+      highlight: { type: '', text: 'Se o Claude Code encontrar uma ambiguidade na spec, ele pergunta antes de assumir — isso é proposital. Responda no chat do terminal para ele continuar.' }
+    },
+    {
+      title: 'Fase 4 — revisar no Antigravity',
+      badge: 'ag',
+      badgeLabel: 'Antigravity (Browser Agent)',
+      desc: 'Com a implementação pronta, o Antigravity entra novamente — desta vez para testar a UI via Browser Agent e fazer code review paralelo com seus agents especializados.',
+      steps: [
+        { dot: 'dot-ag', num: 'A', title: 'Browser Agent testa a UI', detail: 'O Antigravity abre o Chrome de forma autônoma, navega pela feature implementada e verifica se o comportamento bate com a spec.', code: '"Use o Browser Agent para testar a feature em localhost:3000.\nVerifique os fluxos da spec e gere screenshots\nde cada estado da UI."' },
+        { dot: 'dot-ag', num: 'B', title: 'Gerar scripts Cypress', detail: 'Com base no que o Browser Agent observou, o Antigravity gera os scripts de teste E2E automaticamente.' },
+        { dot: 'dot-ag', num: 'C', title: 'Code review paralelo', detail: 'Dispatchar um segundo agent para revisar o código gerado pelo Claude Code: consistência com o restante do projeto, padrões de nomenclatura, segurança.' },
+        { dot: 'dot-ok', num: '✓', title: 'Comparar com a spec original', detail: 'O Antigravity compara o que foi implementado com o Artifact da spec gerado na Fase 2 e aponta divergências.' },
+      ],
+      highlight: { type: 'teal', text: 'Essa fase fecha o ciclo: o mesmo Gemini que gerou a spec agora verifica se ela foi respeitada. Inconsistências voltam para o Claude Code corrigir.' }
+    },
+    {
+      title: 'Fase 5 — entrega e commit',
+      badge: 'both',
+      badgeLabel: 'Antigravity + Claude Code',
+      desc: 'Feature validada, testes passando, documentação gerada. Hora do commit e do PR.',
+      steps: [
+        { dot: 'dot-cc', num: '1', title: 'Claude Code gera o commit message', detail: 'No terminal, pedir ao Claude Code para gerar a mensagem de commit seguindo Conventional Commits.', code: '"Gere uma mensagem de commit no padrão\nConventional Commits para tudo que foi\nimplementado nessa sessão."' },
+        { dot: 'dot-ag', num: 'A', title: 'Antigravity gera a descrição do PR', detail: 'No Antigravity, pedir a descrição do PR com o contexto da spec, o que foi feito e como testar.', code: '"Com base na spec e na implementação,\ngere a descrição do PR em markdown:\n- O que foi feito\n- Como testar\n- Screenshots (use os do Browser Agent)"' },
+        { dot: 'dot-ok', num: '✓', title: 'PR aberto para revisão humana', detail: 'O dev faz o push, abre o PR com a descrição gerada. A revisão final é humana — a IA preparou tudo, o dev decide.' },
+      ],
+      highlight: { type: 'teal', text: 'Resultado por ciclo: spec documentada, implementação com testes Jest, scripts Cypress, Swagger gerado, commit semântico e PR com descrição. Tudo em uma única sessão de trabalho.' }
+    }
+  ];
+
+  let current = 0;
+
+  function renderBadge(type, label) {
+    const cls = type === 'ag' ? 'badge-ag' : type === 'cc' ? 'badge-cc' : type === 'both' ? 'badge-both' : '';
+    const icon = type === 'ag' ? 'bi-google' : type === 'cc' ? 'bi-terminal' : type === 'both' ? 'bi-diagram-3' : 'bi-person-workspace';
+    return `<span class="tool-badge ${cls}"><i class="bi ${icon}"></i>${label}</span>`;
+  }
+
+  function renderContent(phase) {
+    let html = `
+    <div class="card">
+      <div class="card-header">
+        ${renderBadge(phase.badge, phase.badgeLabel)}
+        <h2 class="phase-title">${phase.title}</h2>
+      </div>
+      <p class="phase-desc">${phase.desc}</p>`;
+
+    if (phase.content) {
+      html += phase.content();
+    }
+
+    if (phase.steps) {
+      html += `<div class="steps">`;
+      phase.steps.forEach(s => {
+        html += `<div class="step">
+        <div class="step-dot ${s.dot}">${s.num}</div>
+        <div class="step-content">
+          <div class="step-title">${s.title}</div>
+          <div class="step-detail">${s.detail}</div>
+          ${s.code ? `<div class="code-block">${s.code}</div>` : ''}
+        </div>
+      </div>`;
+      });
+      html += `</div>`;
+    }
+
+    if (phase.highlight) {
+      html += `<div class="highlight ${phase.highlight.type}">${phase.highlight.text}</div>`;
+    }
+
+    html += `
+    <div class="nav-row">
+      <button class="nav-btn" onclick="goTo(${current - 1})" ${current === 0 ? 'disabled' : ''}><i class="bi bi-arrow-left me-1"></i>Anterior</button>
+      <span class="progress">${current + 1} / ${phases.length}</span>
+      ${current < phases.length - 1
+        ? `<button class="nav-btn primary" onclick="goTo(${current + 1})">Próxima fase<i class="bi bi-arrow-right ms-1"></i></button>`
+        : `<button class="nav-btn primary">Finalizar<i class="bi bi-box-arrow-up-right ms-1"></i></button>`
+      }
+    </div>
+  </div>`;
+
+    return html;
+  }
+
+  function goTo(idx) {
+    if (idx < 0 || idx >= phases.length) return;
+    current = idx;
+    document.querySelectorAll('.phase-btn').forEach((btn, i) => {
+      btn.classList.toggle('active', i === idx);
+    });
+    document.getElementById('content').innerHTML = renderContent(phases[idx]);
+  }
+
+  goTo(0);
+</script>
